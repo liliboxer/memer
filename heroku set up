@@ -1,0 +1,3 @@
+// create a heroku application
+// git remote add heroku HEROKU_GIT_URL
+// heroku addons:create mongolab:sandbox -a memes
