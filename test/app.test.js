@@ -52,8 +52,21 @@ describe('app routes', () => {
         expect(res.body).toEqual([memeJSON]);
       });
   });
-
+  it('gets meme by ID', async() => {
+    const meme = await Meme.create({ topField: 'more text', image: 'more url' });
+    return request(app)
+      .get(`/api/v1/memes/${meme._id}`)
+      .then(res => {
+        expect(res.body).toEqual({  
+          __v: 0,
+          _id: expect.any(String),
+          topField: 'more text', 
+          image: 'more url' 
+        });
+      });
+  });
   // update
+
 
   // delete 
 }); 
