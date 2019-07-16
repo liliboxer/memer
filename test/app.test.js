@@ -27,24 +27,24 @@ describe('app routes', () => {
     return request(app)
       .post('/api/v1/memes')
       .send({
-        topField: 'this is a meme',
+        top: 'this is a meme',
         image: 'some URL',
-        bottomField: 'some more text'
+        bottom: 'some more text'
       })
       .then(res => {
         expect(res.body).toEqual({
           __v: 0,
           _id: expect.any(String),
-          topField: 'this is a meme',
+          top: 'this is a meme',
           image: 'some URL',
-          bottomField: 'some more text',
+          bottom: 'some more text',
         });
       });
   });
 
   // read 
   it('get memes from db', async() => {
-    const meme = await Meme.create({ topField: 'some text', image: 'some url' });
+    const meme = await Meme.create({ top: 'some text', image: 'some url' });
     return request(app)
       .get('/api/v1/memes')
       .then(res => {
@@ -53,14 +53,14 @@ describe('app routes', () => {
       });
   });
   it('gets meme by ID', async() => {
-    const meme = await Meme.create({ topField: 'more text', image: 'more url' });
+    const meme = await Meme.create({ top: 'more text', image: 'more url' });
     return request(app)
       .get(`/api/v1/memes/${meme._id}`)
       .then(res => {
         expect(res.body).toEqual({  
           __v: 0,
           _id: expect.any(String),
-          topField: 'more text', 
+          top: 'more text', 
           image: 'more url' 
         });
       });
@@ -69,24 +69,24 @@ describe('app routes', () => {
   // update
   it('update whole meme', async() => {
     const meme = await Meme.create({
-      topField: 'this is a meme',
+      top: 'this is a meme',
       image: 'some URL',
-      bottomField: 'some more text'
+      bottom: 'some more text'
     });
     return request(app)
       .put(`/api/v1/memes/${meme._id}`)
       .send({      
-        topField: 'different text', 
+        top: 'different text', 
         image: 'more url',
-        bottomField: 'some more text'
+        bottom: 'some more text'
       })
       .then(res => {
         expect(res.body).toEqual({
           __v: 0,
           _id: expect.any(String),
-          topField: 'different text', 
+          top: 'different text', 
           image: 'more url',
-          bottomField: 'some more text'
+          bottom: 'some more text'
         });
       });
   });
@@ -94,9 +94,9 @@ describe('app routes', () => {
   // delete 
   it('delete meme by ID', async() => {
     const meme = await Meme.create({
-      topField: 'this is a meme',
+      top: 'this is a meme',
       image: 'some URL',
-      bottomField: 'some more text'
+      bottom: 'some more text'
     });
     return request(app)
       .delete(`/api/v1/memes/${meme._id}`)
@@ -104,9 +104,9 @@ describe('app routes', () => {
         expect(res.body).toEqual({
           __v: 0,
           _id: expect.any(String),
-          topField: 'this is a meme',
+          top: 'this is a meme',
           image: 'some URL',
-          bottomField: 'some more text'
+          bottom: 'some more text'
         });
       });
   });
