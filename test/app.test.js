@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 const mongoose = require('mongoose');
+const Meme = require('../lib/models/Meme');
 
 // connection config
 const connect = require('../lib/utils/connect');
@@ -21,6 +22,7 @@ describe('app routes', () => {
     return mongoose.connection.close();
   });
 
+  // create 
   it('creates meme with POST', () => {
     return request(app)
       .post('/api/v1/memes')
@@ -39,4 +41,19 @@ describe('app routes', () => {
         });
       });
   });
+
+  // read 
+  it('get memes from db', async() => {
+    const meme = await Meme.create({ topField: 'some text', image: 'some url' });
+    return request(app)
+      .get('/api/v1/memes')
+      .then(res => {
+        const memeJSON = JSON.parse(JSON.stringify(meme));
+        expect(res.body).toEqual([memeJSON]);
+      });
+  });
+
+  // update
+
+  // delete 
 }); 
