@@ -65,6 +65,7 @@ describe('app routes', () => {
         });
       });
   });
+
   // update
   it('update whole meme', async() => {
     const meme = await Meme.create({
@@ -91,4 +92,22 @@ describe('app routes', () => {
   });
 
   // delete 
+  it('delete meme by ID', async() => {
+    const meme = await Meme.create({
+      topField: 'this is a meme',
+      image: 'some URL',
+      bottomField: 'some more text'
+    });
+    return request(app)
+      .delete(`/api/v1/memes/${meme._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          topField: 'this is a meme',
+          image: 'some URL',
+          bottomField: 'some more text'
+        });
+      });
+  });
 }); 
