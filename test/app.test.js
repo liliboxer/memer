@@ -66,7 +66,29 @@ describe('app routes', () => {
       });
   });
   // update
-
+  it('update whole meme', async() => {
+    const meme = await Meme.create({
+      topField: 'this is a meme',
+      image: 'some URL',
+      bottomField: 'some more text'
+    });
+    return request(app)
+      .put(`/api/v1/memes/${meme._id}`)
+      .send({      
+        topField: 'different text', 
+        image: 'more url',
+        bottomField: 'some more text'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          topField: 'different text', 
+          image: 'more url',
+          bottomField: 'some more text'
+        });
+      });
+  });
 
   // delete 
 }); 
