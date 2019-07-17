@@ -80,5 +80,20 @@ describe('animal routes', () => {
         });
       });
   });
+  it('updates only animal type', async() => {
+    const animal = await Animal.create({  type: 'Bunny', legs: 4, fluffy: true });
+    return request(app)
+      .patch(`/api/v1/animals/${animal._id}`)
+      .send({ type: 'Cat' })
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          type: 'Cat',
+          legs: 4,
+          fluffy: true
+        });
+      });
+  });
   // delete 
 });
