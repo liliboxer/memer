@@ -32,6 +32,8 @@ describe('bag routes', () => {
       })
       .then(res => {
         expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
           type: 'tote bag',
           material: 'leather',
           numberOfStraps: 2,
