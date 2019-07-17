@@ -6,6 +6,8 @@ const app = require('../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../lib/utils/connect');
 
+const Animal = require('../lib/models/Animal');
+
 describe('animal routes', () => {
   // before and after shit 
   beforeAll(() => {
@@ -38,8 +40,17 @@ describe('animal routes', () => {
         });
       });
   });
-
   // read
+  it('reads animal', async() => {
+    const animal = await Animal.create({  type: 'Cat', legs: 4, fluffy: true });
+    console.log(animal);
+    return request(app)
+      .get('/api/v1/animals')
+      .then(res => {
+        const animalJSON = JSON.parse(JSON.stringify(animal));
+        expect(res.body).toEqual([animalJSON]);
+      });
+  });
 
   // update
 
