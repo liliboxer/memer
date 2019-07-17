@@ -64,8 +64,21 @@ describe('animal routes', () => {
         });
       });
   });
-
   // update
-
+  it('updates full animal', async() => {
+    const animal = await Animal.create({  type: 'Bunny', legs: 4, fluffy: true });
+    return request(app)
+      .put(`/api/v1/animals/${animal._id}`)
+      .send({ type: 'Lion', legs: 4, fluffy: false })
+      .then(res => {
+        expect(res.body).toEqual({   
+          __v: 0,
+          _id: expect.any(String),
+          type: 'Lion',
+          legs: 4,
+          fluffy: false
+        });
+      });
+  });
   // delete 
 });
