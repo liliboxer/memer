@@ -104,6 +104,27 @@ describe('bag routes', () => {
         });
       });
   });
+  it('update only one part of a bag', async() => {
+    const bag = await Bag.create({
+      type: 'clutch',
+      material: 'plastic',
+      numberOfStraps: 0,
+      size: 'small'
+    });
+    return request(app)
+      .patch(`/api/v1/bags/${bag._id}`)
+      .send({ numberOfStraps: 1 })
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String), 
+          type: 'clutch',
+          material: 'plastic',
+          numberOfStraps: 1,
+          size: 'small'
+        });
+      });
+  });
 
   // delete 
 });
