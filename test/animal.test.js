@@ -41,14 +41,27 @@ describe('animal routes', () => {
       });
   });
   // read
-  it('reads animal', async() => {
-    const animal = await Animal.create({  type: 'Cat', legs: 4, fluffy: true });
-    console.log(animal);
+  it('gets all animals', async() => {
+    const animal = await Animal.create({  type: 'Bunny', legs: 4, fluffy: true });
     return request(app)
       .get('/api/v1/animals')
       .then(res => {
         const animalJSON = JSON.parse(JSON.stringify(animal));
         expect(res.body).toEqual([animalJSON]);
+      });
+  });
+  it('gets animal by id', async() => {
+    const animal = await Animal.create({  type: 'Bunny', legs: 4, fluffy: true });
+    return request(app)
+      .get(`/api/v1/animals/${animal._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          type: 'Bunny',
+          legs: 4,
+          fluffy: true
+        });
       });
   });
 
