@@ -96,4 +96,18 @@ describe('animal routes', () => {
       });
   });
   // delete 
+  it('deletes anima by id', async() => {
+    const animal = await Animal.create({  type: 'Bunny', legs: 4, fluffy: true });
+    return request(app)
+      .delete(`/api/v1/animals/${animal._id}`)
+      .then(res => {
+        expect(res.body).toEqual({      
+          __v: 0,
+          _id: expect.any(String),
+          type: 'Bunny',
+          legs: 4,
+          fluffy: true 
+        });
+      });
+  });
 });
