@@ -77,9 +77,33 @@ describe('bag routes', () => {
         });
       });
   });
-
   // update
-
+  it('update entire bag', async() => {
+    const bag = await Bag.create({
+      type: 'clutch',
+      material: 'plastic',
+      numberOfStraps: 0,
+      size: 'small'
+    });
+    return request(app)
+      .put(`/api/v1/bags/${bag._id}`)
+      .send({ 
+        type: 'purse',
+        material: 'canvas',
+        numberOfStraps: 1,
+        size: 'medium'
+      })
+      .then(res => { 
+        expect(res.body).toEqual({          
+          __v: 0,
+          _id: expect.any(String), 
+          type: 'purse',
+          material: 'canvas',
+          numberOfStraps: 1,
+          size: 'medium'
+        });
+      });
+  });
 
   // delete 
 });
