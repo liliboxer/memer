@@ -125,6 +125,25 @@ describe('bag routes', () => {
         });
       });
   });
-
   // delete 
+  it('delete bag by id', async() => {
+    const bag = await Bag.create({
+      type: 'clutch',
+      material: 'plastic',
+      numberOfStraps: 0,
+      size: 'small'
+    });
+    return request(app)
+      .delete(`/api/v1/bags/${bag._id}`)
+      .then(res => {
+        expect(res.body).toEqual({   
+          __v: 0,
+          _id: expect.any(String),    
+          type: 'clutch',
+          material: 'plastic',
+          numberOfStraps: 0,
+          size: 'small' 
+        });
+      });
+  });
 });
