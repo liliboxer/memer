@@ -42,6 +42,20 @@ describe('bag routes', () => {
       });
   });
   // read
+  it('get bag from db', async() => {
+    const bag = await Bag.create({
+      type: 'clutch',
+      material: 'plastic',
+      numberOfStraps: 0,
+      size: 'small'
+    });
+    const bagJSON = JSON.parse(JSON.stringify(bag));
+    return request(app)
+      .get('/api/v1/bags')
+      .then(res => {
+        expect(res.body).toEqual([bagJSON]);
+      });
+  });
 
   // update
 
